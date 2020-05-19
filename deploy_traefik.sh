@@ -31,6 +31,6 @@ docker container exec -it traefik-consul_consul-leader... consul kv put traefik/
 docker container exec -it traefik-consul_consul-leader... consul kv put traefik/tls/certificates/yourdomain/keyFile  "your key content"
 
 Then access follows in browser:
-https://traefik.your-base-domain
-https://consul.your-base-domain
+https://traefik.$UI_DOMAIN
+https://consul.$UI_DOMAIN
 "
