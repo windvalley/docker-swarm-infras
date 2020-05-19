@@ -5,10 +5,10 @@ set -e
 
 export \
 STACK_NAME=traefik-consul \
-# 3 or 5, not more, if just one node is docker swarm mode, set 0
+# 3 or 5, not more. if you have a single node, set 0
 CONSUL_REPLICAS=3 \
 # the value number is equal to the count of swarm mode managers.
-# if just have one manager node, set 1
+# if you just have a single manager node, set 1
 TRAEFIK_REPLICAS=3 \
 # id of the current manager node
 NODE_ID=$(docker info -f '{{.Swarm.NodeID}}')
