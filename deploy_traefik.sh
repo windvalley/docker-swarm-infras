@@ -5,12 +5,12 @@ set -e
 
 export \
 STACK_NAME=traefik-consul \
-# consul服务的的副本数, 默认是3(建议是3或5, 不要更多了),
-# 如果swarm mode只有一个节点, 需要设置成0.
+# 3 or 5, not more, if just one node is docker swarm mode, set 0
 CONSUL_REPLICAS=3 \
-# 设置traefik的副本数, 默认是3, 如果只有一个节点需要设置成1,
+# the value number is equal to the count of swarm mode managers.
+# if just have one manager node, set 1
 TRAEFIK_REPLICAS=3 \
-# 获取当前所在的manager节点ID
+# id of the current manager node
 NODE_ID=$(docker info -f '{{.Swarm.NodeID}}')
 
 while read -r var;do

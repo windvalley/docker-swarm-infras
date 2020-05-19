@@ -2,10 +2,9 @@ version: '3.3'
 
 services:
 
-  # 所有对外提供服务的应用, 均使用traefik做反向代理
   traefik:
     image: traefik:v2.2
-    # `mode: host`, 此项设置使得可以得到用户真实IP, 详见:
+    # `mode: host`, could retrieve the real ip of the client, refer to:
     # https://dockerswarm.rocks/traefik/
     ports:
       - target: 80
@@ -17,7 +16,7 @@ services:
     deploy:
       replicas: ${TRAEFIK_REPLICAS:-3}
       placement:
-        # traefik只能部署在swarm的manger节点, 详见:
+        # traefik can only be deployed in manager node of swarm mode, refer to:
         # https://docs.traefik.io/providers/docker/#docker-api-access_1
         constraints:
           - node.role == manager
@@ -75,7 +74,7 @@ services:
       - default
       - ${TRAEFIK_NETWORK}
     deploy:
-      # 需要将consul-leader固定到某一台节点上, 否则重新部署stack时会选举失败.
+      # consul-leader need to be constrainted to a fixed node, otherwise the consul cluster will elect failed while redeploy the stack.
       placement:
         constraints:
           - node.labels.${STACK_NAME}.consul-data-leader == true
