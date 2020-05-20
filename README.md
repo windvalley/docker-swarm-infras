@@ -97,5 +97,21 @@ https://traefik.$UI_DOMAIN
 https://consul.$UI_DOMAIN
 ```
 
-##
+## Prometheus & Grafana & Unsee & Alertmanager
+
+### Deploy
+
+```bash
+./deploy_swarmprom.sh
+```
+
+### Browser
+
+```
+https://grafana.$UI_DOMAIN
+https://alertmanager.$UI_DOMAIN
+https://unsee.$UI_DOMAIN
+https://prometheus.$UI_DOMAIN
+```
+
 
