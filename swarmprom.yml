@@ -101,7 +101,7 @@ services:
         - "traefik.http.routers.grafana.entryPoints=web, websecure"
         - "traefik.http.routers.grafana.tls=true"
         - "traefik.http.routers.grafana.middlewares=IpWhiteList"
-        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.0.0/16, 10.0.0.0/8"
+        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=${COMMON_IP_WHITELIST}"
         #- "traefik.http.middlewares.auth.basicauth.users=${USERNAME?Variable USERNAME not set}:${HASHED_PASSWORD?Variable HASHED_PASSWORD not set}"
 
   smtp:
@@ -144,7 +144,7 @@ services:
         - "traefik.http.routers.alertmanager.entryPoints=web, websecure"
         - "traefik.http.routers.alertmanager.tls=true"
         - "traefik.http.routers.alertmanager.middlewares=IpWhiteList, auth"
-        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.0.0/16, 10.0.0.0/8"
+        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=${COMMON_IP_WHITELIST}"
         - "traefik.http.middlewares.auth.basicauth.users=${USERNAME?Variable USERNAME not set}:${HASHED_PASSWORD?Variable HASHED_PASSWORD not set}"
 
   # unsee (alert manager dashboard) http://<swarm-ip>:9094
@@ -167,7 +167,7 @@ services:
         - "traefik.http.routers.unsee.entryPoints=web, websecure"
         - "traefik.http.routers.unsee.tls=true"
         - "traefik.http.routers.unsee.middlewares=IpWhiteList, auth"
-        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.0.0/16, 10.0.0.0/8"
+        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=${COMMON_IP_WHITELIST}"
         - "traefik.http.middlewares.auth.basicauth.users=${USERNAME?Variable USERNAME not set}:${HASHED_PASSWORD?Variable HASHED_PASSWORD not set}"
 
   # node-exporter (host metrics collector)
@@ -233,5 +233,5 @@ services:
         - "traefik.http.routers.prometheus.entryPoints=web, websecure"
         - "traefik.http.routers.prometheus.tls=true"
         - "traefik.http.routers.prometheus.middlewares=IpWhiteList, auth"
-        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.0.0/16, 10.0.0.0/8"
+        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=${COMMON_IP_WHITELIST}"
         - "traefik.http.middlewares.auth.basicauth.users=${USERNAME?Variable USERNAME not set}:${HASHED_PASSWORD?Variable HASHED_PASSWORD not set}"

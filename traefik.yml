@@ -30,7 +30,7 @@ services:
         - "traefik.http.routers.api.entryPoints=web, websecure"
         - "traefik.http.routers.api.tls=true"
         - "traefik.http.routers.api.middlewares=IpWhiteList, auth"
-        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.0.0/16, 10.0.0.0/8"
+        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=${COMMON_IP_WHITELIST}"
         - "traefik.http.middlewares.auth.basicauth.users=${USERNAME?Variable USERNAME not set}:${HASHED_PASSWORD?Variable HASHED_PASSWORD not set}"
         # Dummy service for Swarm port detection. The port can be any valid integer value.
         - "traefik.http.services.dummy-svc.loadbalancer.server.port=9999"
@@ -85,7 +85,7 @@ services:
         - "traefik.http.services.consul-leader.loadbalancer.server.port=8500"
         - "traefik.http.routers.consul-leader.entryPoints=web, websecure"
         - "traefik.http.routers.consul-leader.middlewares=IpWhiteList, auth"
-        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.0.0/16, 10.0.0.0/8"
+        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=${COMMON_IP_WHITELIST}"
         - "traefik.http.middlewares.auth.basicauth.users=${USERNAME?Variable USERNAME not set}:${HASHED_PASSWORD?Variable HASHED_PASSWORD not set}"
         - "traefik.http.routers.consul-leader.tls=true"
 
@@ -110,6 +110,7 @@ volumes:
   consul-data-leader:
   consul-data-replica:
   traefik-log:
+  registry-data:
 
 networks:
   traefik-public:
