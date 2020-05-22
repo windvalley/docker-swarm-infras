@@ -7,6 +7,7 @@
 set -e
 
 
+IFS=$'\n'
 while read -r var;do
     export $var
 done < <(grep -Ev '^#|^$' .env)

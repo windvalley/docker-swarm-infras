@@ -7,7 +7,7 @@ Name
 Description
 ===========
 
-Integrated traefik、consul、prometheus、grafana、Swarmpit、Portainer and some other useful open source products
+Integrated Traefik、Consul、Prometheus、Grafana、Swarmpit、Portainer and some other useful open source products
 into the Docker Swarm Mode cluster selectively by some shell scripts and docker-compose files, 
 and then setup a productively container cloud platform.
 
@@ -17,12 +17,14 @@ Deployment
 
 ## Swarm mode cluster
 
-Create Swarm mode cluster refer to:
+Create Swarm mode cluster first refer to:
 ```
 https://docs.docker.com/engine/swarm/swarm-tutorial/create-swarm/
 ```
 
 ## Traefik & Consul
+
+Set up Traefik as a glabal load balancer/proxy and Consul to store configurations and HTTPS certificates.
 
 ### Deploy traefik-consul stack in one manager node
 
@@ -97,7 +99,25 @@ https://traefik.$UI_DOMAIN
 https://consul.$UI_DOMAIN
 ```
 
-## Prometheus & Grafana & Unsee & Alertmanager
+## Registry
+
+Simple private image registry.
+
+### Deploy
+
+```bash
+./deploy_registry.sh
+```
+
+### Browser
+
+```
+https://reg.$UI_DOMAIN/v2/
+```
+
+## Swarmprom (Prometheus & Grafana & Unsee & Alertmanager)
+
+Swarmprom is actually just a set of tools pre-configured in a smart way for a Docker Swarm cluster.
 
 ### Deploy
 
@@ -114,4 +134,34 @@ https://unsee.$UI_DOMAIN
 https://prometheus.$UI_DOMAIN
 ```
 
+## Swarmpit
 
+Swarmpit provides a nice and clean way to manage your Docker Swarm cluster.
+
+### Depoly
+
+```bash
+./deploy_swarmpit.sh
+```
+
+### Browser
+
+```
+https://swarmpit.$UI_DOMAIN
+```
+
+## Portainer
+
+Portainer is a web UI (user interface) that allows you to see the state of your Docker services in a Docker Swarm mode cluster and manage it.
+
+### Deploy
+
+```bash
+./deploy_portainer.sh
+```
+
+### Browser
+
+```
+https://portainer.$UI_DOMAIN
+```

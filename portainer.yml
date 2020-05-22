@@ -1,0 +1,50 @@
+version: '3.3'
+
+services:
+  agent:
+    image: portainer/agent
+    environment:
+      AGENT_CLUSTER_ADDR: tasks.agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - agent-network
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.platform.os == linux
+
+  portainer:
+    image: portainer/portainer
+    command: -H tcp://tasks.agent:9001 --tlsskipverify
+    volumes:
+      - portainer-data:/data
+    networks:
+      - agent-network
+      - $TRAEFIK_NETWORK
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+          - node.labels.portainer.portainer-data == true
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=${TRAEFIK_NETWORK}"
+        - "traefik.http.routers.portainer.rule=Host(`portainer.${UI_DOMAIN?Variable UI_DOMAIN not set}`)"
+        - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+        - "traefik.http.routers.portainer.entryPoints=web, websecure"
+        - "traefik.http.routers.portainer.tls=true"
+        - "traefik.http.routers.portainer.middlewares=IpWhiteList"
+        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=${COMMON_IP_WHITELIST}"
+        #- "traefik.http.middlewares.auth.basicauth.users=${USERNAME?Variable USERNAME not set}:${HASHED_PASSWORD?Variable HASHED_PASSWORD not set}"
+
+networks:
+  agent-network:
+    attachable: true
+  traefik-public:
+    external: true
+
+volumes:
+  portainer-data:

@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+
+  registry:
+    image: registry:2
+    networks:
+      - default
+      - ${TRAEFIK_NETWORK}
+    volumes:
+      - image-data:/var/lib/registry
+    deploy:
+      placement:
+        constraints:
+          - node.labels.${STACK_NAME}.image-data == true
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=${TRAEFIK_NETWORK}"
+        - "traefik.http.routers.registry.rule=Host(`reg.${UI_DOMAIN?Variable UI_DOMAIN not set}`)"
+        - "traefik.http.services.registry.loadbalancer.server.port=5000"
+        - "traefik.http.routers.registry.entryPoints=web, websecure"
+        - "traefik.http.routers.registry.tls=true"
+        - "traefik.http.routers.registry.middlewares=IpWhiteList"
+        - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=${COMMON_IP_WHITELIST}"
+
+volumes:
+  image-data:
+
+networks:
+  traefik-public:
+    external: true

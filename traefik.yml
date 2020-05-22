@@ -84,10 +84,10 @@ services:
         - "traefik.http.routers.consul-leader.rule=Host(`consul.${UI_DOMAIN?Variable UI_DOMAIN not set}`)"
         - "traefik.http.services.consul-leader.loadbalancer.server.port=8500"
         - "traefik.http.routers.consul-leader.entryPoints=web, websecure"
+        - "traefik.http.routers.consul-leader.tls=true"
         - "traefik.http.routers.consul-leader.middlewares=IpWhiteList, auth"
         - "traefik.http.middlewares.IpWhiteList.ipwhitelist.sourcerange=${COMMON_IP_WHITELIST}"
         - "traefik.http.middlewares.auth.basicauth.users=${USERNAME?Variable USERNAME not set}:${HASHED_PASSWORD?Variable HASHED_PASSWORD not set}"
-        - "traefik.http.routers.consul-leader.tls=true"
 
   consul-replica:
     image: consul
@@ -110,7 +110,6 @@ volumes:
   consul-data-leader:
   consul-data-replica:
   traefik-log:
-  registry-data:
 
 networks:
   traefik-public:
