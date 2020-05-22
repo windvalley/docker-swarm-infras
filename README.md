@@ -93,7 +93,6 @@ docker container exec -it traefik-consul_consul-leader... consul kv put traefik/
 > https://www.consul.io/docs/commands/kv
 
 ### Browser
-
 ```
 https://traefik.$UI_DOMAIN
 https://consul.$UI_DOMAIN
@@ -110,7 +109,6 @@ Simple private image registry.
 ```
 
 ### Browser
-
 ```
 https://reg.$UI_DOMAIN/v2/
 ```
@@ -126,7 +124,6 @@ Swarmprom is actually just a set of tools pre-configured in a smart way for a Do
 ```
 
 ### Browser
-
 ```
 https://grafana.$UI_DOMAIN
 https://alertmanager.$UI_DOMAIN
@@ -145,7 +142,6 @@ Swarmpit provides a nice and clean way to manage your Docker Swarm cluster.
 ```
 
 ### Browser
-
 ```
 https://swarmpit.$UI_DOMAIN
 ```
@@ -161,7 +157,19 @@ Portainer is a web UI (user interface) that allows you to see the state of your 
 ```
 
 ### Browser
-
 ```
 https://portainer.$UI_DOMAIN
 ```
+
+References
+==========
+
+https://dockerswarm.rocks/
+
+https://docs.traefik.io/
+
+https://github.com/stefanprodan/swarmprom
+
+https://github.com/swarmpit/swarmpit
+
+https://github.com/portainer/portainer
