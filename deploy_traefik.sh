@@ -27,8 +27,8 @@ docker stack deploy -c traefik.yml $STACK_NAME
 
 
 echo "Next please put your domain certs in consul as follows:
-docker container exec -it traefik-consul_consul-leader... consul kv put traefik/tls/certificates/yourdomain/certFile  "your cert content"
-docker container exec -it traefik-consul_consul-leader... consul kv put traefik/tls/certificates/yourdomain/keyFile  "your key content"
+docker container exec -it traefik-consul_consul-leader... consul kv put traefik/tls/certificates/wildcard.$UI_DOMAIN/certFile  "your cert content"
+docker container exec -it traefik-consul_consul-leader... consul kv put traefik/tls/certificates/wildcard.$UI_DOMAIN/keyFile  "your key content"
 
 Then access follows in browser:
 https://traefik.$UI_DOMAIN

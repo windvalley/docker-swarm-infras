@@ -22,6 +22,14 @@ Create Swarm mode cluster first refer to:
 https://docs.docker.com/engine/swarm/swarm-tutorial/create-swarm/
 ```
 
+## Deploy all infra stacks at one time
+
+```bash
+./deploy.sh
+```
+
+Or you can deploy one by one as follows.
+
 ## Traefik & Consul
 
 Set up Traefik as a glabal load balancer/proxy and Consul to store configurations and HTTPS certificates.
