@@ -1,7 +1,8 @@
 #!/bin/sh -e
 
 cat /etc/prometheus/prometheus.yml > /tmp/prometheus.yml
-cat /etc/prometheus/weave-cortex.yml | \
+# shellcheck disable=SC2002
+cat /etc/prometheus/weave-cortex.yml |
     sed "s@#password: <token>#@password: '$WEAVE_TOKEN'@g" > /tmp/weave-cortex.yml
 
 #JOBS=mongo-exporter:9111 redis-exporter:9112

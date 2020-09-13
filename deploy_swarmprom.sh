@@ -9,13 +9,14 @@ set -e
 
 IFS=$'\n'
 while read -r var;do
-    export $var
+    # shellcheck disable=SC2163
+    export "$var"
 done < <(grep -Ev '^#|^$' .env)
 
 export STACK_NAME=swarmprom
 
 # NOTE: If you forge the address and username of the mail sender, dest email server may reject the mail.
-#export GF_SMTP_FROM_ADDRESS=admin@test.com 
+#export GF_SMTP_FROM_ADDRESS=admin@test.com
 #export GF_SMTP_FROM_NAME=admin
 
 

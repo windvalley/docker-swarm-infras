@@ -5,7 +5,8 @@
 
 IFS=$'\n'
 while read -r var;do
-    export $var
+    # shellcheck disable=SC2163
+    export "$var"
 done < <(grep -Ev '^#|^$' .env)
 
 export STACK_NAME=traefik-consul
@@ -15,20 +16,21 @@ export CONSUL_REPLICAS=3
 # if you just have a single manager node, set 1
 export TRAEFIK_REPLICAS=3
 # id of the current manager node
+# shellcheck disable=SC2155
 export NODE_ID=$(docker info -f '{{.Swarm.NodeID}}')
 
 
-docker network create --driver=overlay $TRAEFIK_NETWORK
+docker network create --driver=overlay "$TRAEFIK_NETWORK"
 
-docker node update --label-add ${STACK_NAME}.consul-data-leader=true $NODE_ID
+docker node update --label-add ${STACK_NAME}.consul-data-leader=true "$NODE_ID"
 
 sed -i "s/traefik-public/$TRAEFIK_NETWORK/" traefik.yml
 docker stack deploy -c traefik.yml $STACK_NAME
 
 
 echo "Next please put your domain certs in consul as follows:
-docker container exec -it traefik-consul_consul-leader... consul kv put traefik/tls/certificates/wildcard.$UI_DOMAIN/certFile  "your cert content"
-docker container exec -it traefik-consul_consul-leader... consul kv put traefik/tls/certificates/wildcard.$UI_DOMAIN/keyFile  "your key content"
+docker container exec -it traefik-consul_consul-leader... consul kv put traefik/tls/certificates/wildcard.$UI_DOMAIN/certFile  \"your cert content\"
+docker container exec -it traefik-consul_consul-leader... consul kv put traefik/tls/certificates/wildcard.$UI_DOMAIN/keyFile  \"your key content\"
 
 Then access follows in browser:
 https://traefik.$UI_DOMAIN

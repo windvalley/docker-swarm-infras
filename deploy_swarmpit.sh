@@ -6,16 +6,18 @@ set -e
 
 IFS=$'\n'
 while read -r var;do
-    export $var
+    # shellcheck disable=SC2163
+    export "$var"
 done < <(grep -Ev '^#|^$' .env)
 
 
 export STACK_NAME=swarmpit
+# shellcheck disable=SC2155
 export NODE_ID=$(docker info -f '{{.Swarm.NodeID}}')
 
 
-docker node update --label-add swarmpit.db-data=true $NODE_ID
-docker node update --label-add swarmpit.influx-data=true $NODE_ID
+docker node update --label-add swarmpit.db-data=true "$NODE_ID"
+docker node update --label-add swarmpit.influx-data=true "$NODE_ID"
 
 sed -i "s/traefik-public/$TRAEFIK_NETWORK/" swarmpit.yml
 docker stack deploy -c swarmpit.yml $STACK_NAME
